@@ -8,6 +8,28 @@ import torch
 # 从训练文件导入我们刚刚使用的模型
 from train import CP0Model
 
+from matplotlib import animation
+import matplotlib.pyplot as plt
+
+
+def save_frames_as_gif(frames, path='./', filename='gym_animation.gif'):
+
+    #Mess with this to change frame size
+    plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0),
+               dpi=72)
+
+    patch = plt.imshow(frames[0])
+    plt.axis('off')
+
+    def animate(i):
+        patch.set_data(frames[i])
+
+    anim = animation.FuncAnimation(plt.gcf(),
+                                   animate,
+                                   frames=len(frames),
+                                   interval=50)
+    anim.save(path + filename, writer='Pillow', fps=60)
+
 
 def get_action(model, state):
     probs = model(torch.tensor(state[np.newaxis, :]).float())
@@ -30,11 +52,12 @@ if __name__ == '__main__':
 
     done = False
     n_restart = 0
+    frames = []
     try:
         state = env.reset()
         total_reward = 0.
-        for _ in range(2000):
-            env.render()
+        for _ in range(201):
+            frames.append(env.render(mode="rgb_array"))
             if done:
                 print(f'done, total reward: {total_reward}')
                 state = env.reset()
@@ -47,3 +70,5 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
         env.close()
+
+    # save_frames_as_gif(frames)
