@@ -14,8 +14,9 @@ from matplotlib import animation
 import matplotlib.pyplot as plt
 
 
-def save_frames_as_gif(frames, path='./', filename='gym_animation5.gif'):
+def save_frames_as_gif(frames, path='./', filename='gym_animation6.gif'):
 
+    frames = frames[::len(frames) // 300][:300]
     #Mess with this to change frame size
     plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0),
                dpi=72)

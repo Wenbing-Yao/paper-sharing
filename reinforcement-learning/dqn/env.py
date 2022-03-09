@@ -57,6 +57,8 @@ class SkipframeWrapper(Wrapper):
 
         if total_reward == 0:
             self.n_nops += 1
+        else:
+            self.n_nops = 0
 
         if self.n_max_nops and self.n_nops >= self.n_max_nops:
             done = True
