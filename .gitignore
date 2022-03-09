@@ -2,3 +2,4 @@
 .DS_Store
 *.pyc
 reinforcement-learning/.vscode/settings.json
+reinforcement-learning/dqn/gym_animation6.gif
